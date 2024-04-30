@@ -38,10 +38,6 @@ build {
   sources = ["source.amazon-ebs.windows"]
 
   provisioner "powershell" {
-    script = "./install.ps1"
-  }
-
-  provisioner "powershell" {
     inline = [
       # Re-initialise the AWS instance on startup
       "C:/ProgramData/Amazon/EC2-Windows/Launch/Scripts/InitializeInstance.ps1 -Schedule",
