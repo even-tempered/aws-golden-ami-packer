@@ -14,8 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
 
-      - name: Run `packer init`
-        run: packer init "./home/ami-windows.pkr.hcl"
+      - name: Run `packer fmt`
+        run: packer fmt "./home/ami-windows.pkr.hcl"
         
       - name: Run `packer validate`
         run: packer validate "./home/ami-windows.pkr.hcl"
