@@ -5,7 +5,7 @@ variable "ami_name" {
 
 variable "region" {
   type    = string
-  default = "eu-west-1"
+  default = "us-west-2"
 }
 
 # https://www.packer.io/docs/builders/amazon/ebs
