@@ -30,7 +30,7 @@ source "amazon-ebs" "windows" {
   # This user data file sets up winrm and configures it so that the connection
   # from Packer is allowed. Without this file being set, Packer will not
   # connect to the instance.
-  user_data_file = "winrm_bootstrap.txt"
+  user_data_file = "./winrm_bootstrap.txt"
 }
 
 # https://www.packer.io/docs/provisioners
@@ -38,7 +38,7 @@ build {
   sources = ["source.amazon-ebs.windows"]
 
   provisioner "powershell" {
-    script = "install.ps1"
+    script = "./install.ps1"
   }
 
   provisioner "powershell" {
