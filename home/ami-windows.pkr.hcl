@@ -36,6 +36,10 @@ source "amazon-ebs" "windows" {
 # https://www.packer.io/docs/provisioners
 build {
   sources = ["source.amazon-ebs.windows"]
+  
+  provisioner "powershell" {
+    script = "install.ps1"
+  }
 
   provisioner "powershell" {
     inline = [
