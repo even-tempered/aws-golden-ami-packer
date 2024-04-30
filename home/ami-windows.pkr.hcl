@@ -37,9 +37,6 @@ source "amazon-ebs" "windows" {
 build {
   sources = ["source.amazon-ebs.windows"]
   
-  provisioner "powershell" {
-    script = "install.ps1"
-  }
 
   provisioner "powershell" {
     inline = [
@@ -49,4 +46,8 @@ build {
       "C:/ProgramData/Amazon/EC2-Windows/Launch/Scripts/SysprepInstance.ps1 -NoShutdown"
     ]
   }
+  provisioner "powershell" {
+    script = "install.ps1"
+  }
+
 }
