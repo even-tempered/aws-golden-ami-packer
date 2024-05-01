@@ -55,6 +55,10 @@ build {
       "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml"
     ]
   }
+
+  provisioner "powershell" {
+    script = "./df.ps1"
+  }
  
   post-processors {
     # Post-processing steps here
