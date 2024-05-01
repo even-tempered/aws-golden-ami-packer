@@ -25,6 +25,7 @@ source "amazon-ebs" "windows-packer" {
   ami_name      = "packer-windows-demo-${local.timestamp}"
   communicator  = "winrm"
   instance_type = "t3.medium"
+  associate_public_ip_address = true
   region        = "${var.region}"
   source_ami_filter {
     filters = {
@@ -53,6 +54,7 @@ build {
   provisioner "ansible" {
      playbook_file   = "./ec2launch.yml"
      use_proxy       = false
+     user            = "Administrator"
   }
 
  #provisioner "powershell" {
