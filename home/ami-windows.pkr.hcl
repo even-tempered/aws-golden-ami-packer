@@ -43,7 +43,7 @@ build {
  # }
 
   provisioner "ansible" {
-     playbook_file   = "./././playbooks/windows/tasks/install-ec2launch.yml"
+     playbook_file   = "./ec2launch.yml"
      use_proxy       = false
   }
 
