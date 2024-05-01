@@ -41,7 +41,8 @@ build {
   provisioner "powershell" {
     script = "./df.ps1"
   }
-provisioner "file" {
+
+  provisioner "file" {
     source      = "./unattend.xml"
     destination = "C:\\unattend.xml"
   }
