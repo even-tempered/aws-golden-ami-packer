@@ -10,7 +10,7 @@ variable "region" {
 
 # https://www.packer.io/docs/builders/amazon/ebs
 source "amazon-ebs" "windows" {
-  ami_name = "saurabh_02${var.ami_name}"
+  ami_name = "rmovedxml_${var.ami_name}"
   instance_type = "t3.medium"
   region = "${var.region}"
   source_ami_filter {
@@ -37,26 +37,27 @@ source "amazon-ebs" "windows" {
 build {
   sources = ["source.amazon-ebs.windows"]
 
- provisioner "file" {
-    source      = "./unattend.xml"
-    destination = "C:\\Windows\\Panther\\Unattend\\unattend.xml"
-  }
+# provisioner "file" {
+ #   source      = "./unattend.xml"
+ #   destination = "C:\\Windows\\Panther\\Unattend\\unattend.xml"
+ # }
  
- provisioner "powershell" {
-    inline = [
-      "Write-Output 'Injecting Unattend.xml file'",
-      "Get-ChildItem 'C:\\Windows\\Panther\\Unattend\\unattend.xml'"
-    ]
-  }
+ #provisioner "powershell" {
+ #   inline = [
+ #     "Write-Output 'Injecting Unattend.xml file'",
+ #     "Get-ChildItem 'C:\\Windows\\Panther\\Unattend\\unattend.xml'"
+ #   ]
+ # }
  provisioner "powershell" {
     inline = [
       "Write-Output 'Running sysprep...'",
       "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /quit /quiet /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
       "Write-Output 'InitializeInstance.ps1'",
       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
-      "Write-Output 'running SysprepInstance.ps1'",
-      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown",
-      "Write-Output 'settting password'",
+      "Write-Output 'running EC@LAUNCH'",
+      "C:/Program Files/Amazon/EC2Launch/ec2launch' reset --block",
+      "C:/Program Files/Amazon/EC2Launch/ec2launch' sysprep --shutdown --block",
+      "Write-Output 'running EC@LAUNCH'",
       "net user Administrator Saurabh@123"
     ]
   }
