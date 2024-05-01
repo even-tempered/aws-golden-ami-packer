@@ -57,7 +57,11 @@ build {
   }
 
   provisioner "powershell" {
-    script = "./df.ps1"
+     inline = [
+       # Set Administrator password using EC2Launch
+       "Write-Output 'InitializeInstance.ps1'",
+       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule"
+    ]
   }
  
   post-processors {
