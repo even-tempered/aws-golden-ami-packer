@@ -41,5 +41,9 @@ build {
   provisioner "powershell" {
     script = "./df.ps1"
   }
-
+  post-processors {
+    sysprep {
+      answer_file = "./unattend.xml"
+    }
+  }
 }
