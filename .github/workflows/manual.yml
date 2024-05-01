@@ -16,6 +16,9 @@ jobs:
 
       - name: Run `packer fmt`
         run: packer fmt "./home/ami-windows.pkr.hcl"
+  
+      - name: Run `packer init`
+        run: packer init "./home/ami-windows.pkr.hcl"
         
       - name: Run `packer validate`
         run: packer validate "./home/ami-windows.pkr.hcl"
