@@ -41,9 +41,20 @@ build {
   provisioner "powershell" {
     script = "./df.ps1"
   }
-  post-processors {
-    sysprep {
-      answer_file = "./unattend.xml"
-    }
+provisioner "file" {
+    source      = "./unattend.xml"
+    destination = "C:\\unattend.xml"
   }
+ 
+  provisioner "windows-restart" {
+    restart_timeout = "10m"
+    restart_check_command = "powershell -command \"& { Write-Host 'Waiting for restart...'; sleep 30; }\""
+  }
+ 
+  provisioner "powershell" {
+    inline = [
+      "net user Administrator Password@123"
+    ]
+    when = "after"
+  
 }
