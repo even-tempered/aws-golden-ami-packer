@@ -37,19 +37,7 @@ source "amazon-ebs" "windows" {
 build {
   sources = ["source.amazon-ebs.windows"]
   
- provisioner "file" {
-    source      = "./unattend.xml"
-    destination = "C:\\Windows\\Panther\\Unattend\\unattend.xml"
-  }
- 
-  provisioner "powershell" {
-    inline = [
-      "Write-Output 'Injecting Unattend.xml file'",
-      "Get-ChildItem 'C:\\Windows\\Panther\\Unattend\\unattend.xml'"
-    ]
-  }
- 
-  provisioner "powershell" {
+ provisioner "powershell" {
     inline = [
       "Write-Output 'Running sysprep...'",
       "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
@@ -57,7 +45,18 @@ build {
       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule"
     ]
   }
-
+ provisioner "file" {
+    source      = "./unattend.xml"
+    destination = "C:\\Windows\\Panther\\Unattend\\unattend.xml"
+  }
+ 
+ provisioner "powershell" {
+    inline = [
+      "Write-Output 'Injecting Unattend.xml file'",
+      "Get-ChildItem 'C:\\Windows\\Panther\\Unattend\\unattend.xml'"
+    ]
+  }
+ 
   post-processors {
     # Post-processing steps here
   }
