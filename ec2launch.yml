@@ -24,4 +24,4 @@
     - name: Remove installer file from destination
       win_file:
        path: C:\Software\EC2Launch\AmazonEC2Launch.msi
-       state: absen
+       state: absent
