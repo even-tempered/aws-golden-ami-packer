@@ -13,7 +13,7 @@
             <TimeZone>UTC</TimeZone>
             <UserAccounts>
                 <AdministratorPassword>
-                    <Value>vagrant</Value>
+                    <Value>Password@123</Value>
                     <PlainText>true</PlainText>
                 </AdministratorPassword>
             </UserAccounts>
