@@ -10,7 +10,7 @@ variable "region" {
 
 # https://www.packer.io/docs/builders/amazon/ebs
 source "amazon-ebs" "windows" {
-  ami_name = "rmovedxml_${var.ami_name}"
+  ami_name = "ec2launchv2_${var.ami_name}"
   instance_type = "t3.medium"
   region = "${var.region}"
   source_ami_filter {
@@ -41,7 +41,12 @@ build {
  #   source      = "./unattend.xml"
  #   destination = "C:\\Windows\\Panther\\Unattend\\unattend.xml"
  # }
- 
+
+  provisioner "ansible" {
+     playbook_file   = "./././playbooks/windows/tasks/install-ec2launch.yml"
+     use_proxy       = false
+  }
+
  #provisioner "powershell" {
  #   inline = [
  #     "Write-Output 'Injecting Unattend.xml file'",
@@ -55,9 +60,9 @@ build {
       "Write-Output 'InitializeInstance.ps1'",
       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
       "Write-Output 'running EC@LAUNCH'",
-      "C:/Program Files/Amazon/EC2Launch/ec2launch' reset --block",
-      "C:/Program Files/Amazon/EC2Launch/ec2launch' sysprep --shutdown --block",
-      "Write-Output 'running EC@LAUNCH'",
+      "& 'C:/Program Files/Amazon/EC2Launch/ec2launch' reset --block",
+      "& 'C:/Program Files/Amazon/EC2Launch/ec2launch' sysprep --shutdown --block",
+      "Write-Output 'running setting password'",
       "net user Administrator Saurabh@123"
     ]
   }
