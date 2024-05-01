@@ -1,14 +1,10 @@
 packer {
   required_plugins {
     amazon = {
-      version = ">= 1.2.6"
+      version = ">= 0.0.1"
       source = "github.com/hashicorp/amazon"
     }
   }
-}
-variable "ami_name" {
-  type = string
-  default = "custom-windows-{{timestamp}}"
 }
 
 variable "region" {
@@ -16,32 +12,34 @@ variable "region" {
   default = "us-west-2"
 }
 
-# https://www.packer.io/docs/builders/amazon/ebs
-source "amazon-ebs" "windows" {
-  ami_name = "ec2launchv2_${var.ami_name}"
+locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
+
+# source blocks are generated from your builders; a source can be referenced in
+# build blocks. A build block runs provisioner and post-processors on a
+# source.
+source "amazon-ebs" "windows-packer" {
+  ami_name      = "packer-windows-demo-${local.timestamp}"
+  communicator  = "winrm"
   instance_type = "t3.medium"
-  region = "${var.region}"
-  associate_public_ip_address = true
+  region        = "${var.region}"
   source_ami_filter {
     filters = {
-      name = "Windows_Server-2019-English-Full-Base-*"
-      root-device-type = "ebs"
+      name                = "Windows_Server-2019-English-Full-Base*"
+      root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
     most_recent = true
-    owners = ["amazon"]
+    owners      = ["amazon"]
   }
-  communicator = "winrm"
+  user_data_file = "./bootstrap_win.txt"
+  winrm_password = "SuperS3cr3t!!!!"
   winrm_username = "Administrator"
-  winrm_port = 5985
-  winrm_use_ssl = true
-  winrm_insecure = true
-  user_data_file = "./winrm_bootstrap.txt"
 }
 
-# https://www.packer.io/docs/provisioners
+# a build block invokes sources and runs provisioning steps on them.
 build {
-  sources = ["source.amazon-ebs.windows"]
+  name    = "windows-packer"
+  sources = ["source.amazon-ebs.windows-packer"]
 
 # provisioner "file" {
  #   source      = "./unattend.xml"
