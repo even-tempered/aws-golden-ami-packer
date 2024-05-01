@@ -54,6 +54,8 @@ build {
       "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
       "Write-Output 'InitializeInstance.ps1'",
       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
+      "net user Administrator Saurabh@123",
+      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown",
       "net user Administrator Saurabh@123"
     ]
   }
