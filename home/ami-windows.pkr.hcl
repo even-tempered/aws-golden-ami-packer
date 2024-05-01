@@ -25,6 +25,7 @@ source "amazon-ebs" "windows" {
   }
   communicator = "winrm"
   winrm_username = "Administrator"
+  winrm_port = 5985
   winrm_use_ssl = true
   winrm_insecure = true
   user_data_file = "./winrm_bootstrap.txt"
