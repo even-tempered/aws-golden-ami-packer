@@ -37,25 +37,27 @@ source "amazon-ebs" "windows" {
 build {
   sources = ["source.amazon-ebs.windows"]
   
-
-  provisioner "powershell" {
-    script = "./df.ps1"
-  }
-
-  provisioner "file" {
-    source      = "./unattend.xml"
-    destination = "C:\\unattend.xml"
-  }
- 
-  provisioner "windows-restart" {
-    restart_timeout = "10m"
-    restart_check_command = "powershell -command \"& { Write-Host 'Waiting for restart...'; sleep 30; }\""
+ provisioner "file" {
+    source      = "./Unattend.xml"
+    destination = "C:\\Windows\\Panther\\Unattend\\Unattend.xml"
   }
  
   provisioner "powershell" {
     inline = [
-      "net user Administrator Password@123"
+      "Write-Output 'Injecting Unattend.xml file'",
+      "Get-ChildItem 'C:\\Windows\\Panther\\Unattend\\Unattend.xml'"
     ]
-    when = "after"
+  }
+ 
+  provisioner "powershell" {
+    inline = [
+      "Write-Output 'Running sysprep...'",
+      "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\Unattend.xml"
+    ]
+  }
+ 
+  post-processors {
+    # Post-processing steps here
+  }
   
 }
