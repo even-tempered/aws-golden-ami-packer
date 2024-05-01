@@ -36,15 +36,7 @@ source "amazon-ebs" "windows" {
 # https://www.packer.io/docs/provisioners
 build {
   sources = ["source.amazon-ebs.windows"]
-  
- provisioner "powershell" {
-    inline = [
-      "Write-Output 'Running sysprep...'",
-      "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
-      "Write-Output 'InitializeInstance.ps1'",
-      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule"
-    ]
-  }
+
  provisioner "file" {
     source      = "./unattend.xml"
     destination = "C:\\Windows\\Panther\\Unattend\\unattend.xml"
@@ -54,6 +46,15 @@ build {
     inline = [
       "Write-Output 'Injecting Unattend.xml file'",
       "Get-ChildItem 'C:\\Windows\\Panther\\Unattend\\unattend.xml'"
+    ]
+  }
+ provisioner "powershell" {
+    inline = [
+      "Write-Output 'Running sysprep...'",
+      "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
+      "Write-Output 'InitializeInstance.ps1'",
+      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
+      "net user Administrator Password@123"
     ]
   }
  
