@@ -52,18 +52,12 @@ build {
   provisioner "powershell" {
     inline = [
       "Write-Output 'Running sysprep...'",
-      "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml"
+      "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
+      "Write-Output 'InitializeInstance.ps1'",
+      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule"
     ]
   }
 
-  provisioner "powershell" {
-     inline = [
-       # Set Administrator password using EC2Launch
-       "Write-Output 'InitializeInstance.ps1'",
-       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule"
-    ]
-  }
- 
   post-processors {
     # Post-processing steps here
   }
