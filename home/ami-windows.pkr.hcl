@@ -13,6 +13,7 @@ source "amazon-ebs" "windows" {
   ami_name = "ec2launchv2_${var.ami_name}"
   instance_type = "t3.medium"
   region = "${var.region}"
+  associate_public_ip_address = true
   source_ami_filter {
     filters = {
       name = "Windows_Server-2019-English-Full-Base-*"
@@ -24,8 +25,8 @@ source "amazon-ebs" "windows" {
   }
   communicator = "winrm"
   winrm_username = "Administrator"
-  winrm_port = 5985
-  winrm_timeout = "10m"
+  winrm_use_ssl = true
+  winrm_insecure = true
   user_data_file = "./winrm_bootstrap.txt"
 }
 
