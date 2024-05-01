@@ -10,7 +10,7 @@ variable "region" {
 
 # https://www.packer.io/docs/builders/amazon/ebs
 source "amazon-ebs" "windows" {
-  ami_name = "saurabh1_${var.ami_name}"
+  ami_name = "saurabh_02${var.ami_name}"
   instance_type = "t3.medium"
   region = "${var.region}"
   source_ami_filter {
@@ -51,9 +51,12 @@ build {
  provisioner "powershell" {
     inline = [
       "Write-Output 'Running sysprep...'",
-      "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /shutdown /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
+      "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /quit /quiet /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
       "Write-Output 'InitializeInstance.ps1'",
       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
+      "Write-Output 'running SysprepInstance.ps1'",
+      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown",
+      "Write-Output 'settting password'",
       "net user Administrator Saurabh@123"
     ]
   }
