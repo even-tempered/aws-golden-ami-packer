@@ -1,9 +1,7 @@
-# Set default password for Administrator account
-$password = "Password@123"
-$securePassword = ConvertTo-SecureString -String $password -AsPlainText -Force
-$user = [adsi]"WinNT://./Administrator,user"
-$user.SetPassword($securePassword)
+# Set default password
+$adminPassword = "Password@123"
+$secureAdminPassword = ConvertTo-SecureString -String $adminPassword -AsPlainText -Force
+net user Administrator $adminPassword
  
-# Run EC2Config to perform sysprep
-$ec2ConfigPath = "C:\Program Files\Amazon\Ec2ConfigService\Ec2Config.exe"
-Start-Process -FilePath $ec2ConfigPath -ArgumentList "-sysprep" -NoNewWindow -Wait
+# Run sysprep
+C:\Windows\System32\sysprep\sysprep.exe /generalize /oobe /shutdown /quiet
