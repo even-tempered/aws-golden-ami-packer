@@ -51,29 +51,28 @@ build {
  #   destination = "C:\\Windows\\Panther\\Unattend\\unattend.xml"
  # }
 
-  provisioner "ansible" {
+provisioner "ansible" {
      playbook_file   = "./ec2launch.yml"
      use_proxy       = false
      user            = "Administrator"
   }
+ 
+ provisioner "file" {
+    source      = "./unattend.xml"
+    destination = "C:\ProgramData\Amazon\EC2Launch\sysprep\unattend.xml"
+  }
 
- #provisioner "powershell" {
- #   inline = [
- #     "Write-Output 'Injecting Unattend.xml file'",
- #     "Get-ChildItem 'C:\\Windows\\Panther\\Unattend\\unattend.xml'"
- #   ]
- # }
- provisioner "powershell" {
+ provisioner "file" {
+    source      = "./agent-config.yml"
+    destination = "C:\ProgramData\Amazon\EC2Launch\config\agent-config.yml"
+  }
+
+
+
+  provisioner "powershell" {
     inline = [
-      "Write-Output 'Running sysprep...'",
-      "C:\\Windows\\System32\\Sysprep\\Sysprep.exe /generalize /oobe /quit /quiet /unattend:C:\\Windows\\Panther\\Unattend\\unattend.xml",
-      "Write-Output 'InitializeInstance.ps1'",
-      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
-      "Write-Output 'running EC@LAUNCH'",
       "& 'C:/Program Files/Amazon/EC2Launch/ec2launch' reset --block",
-      "& 'C:/Program Files/Amazon/EC2Launch/ec2launch' sysprep --shutdown --block",
-      "Write-Output 'running setting password'",
-      "net user Administrator Saurabh@123"
+      "& 'C:/Program Files/Amazon/EC2Launch/ec2launch' sysprep --shutdown --block"
     ]
   }
  
