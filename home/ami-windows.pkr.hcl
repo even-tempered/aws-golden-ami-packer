@@ -59,12 +59,12 @@ provisioner "ansible" {
  
  provisioner "file" {
     source      = "./unattend.xml"
-    destination = "C:\ProgramData\Amazon\EC2Launch\sysprep\unattend.xml"
+    destination = "C:\\ProgramData\\Amazon\\EC2Launch\\sysprep\\unattend.xml"
   }
 
  provisioner "file" {
     source      = "./agent-config.yml"
-    destination = "C:\ProgramData\Amazon\EC2Launch\config\agent-config.yml"
+    destination = "C:\\ProgramData\\Amazon\\EC2Launch\\config\\agent-config.yml"
   }
 
 
