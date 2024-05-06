@@ -37,7 +37,6 @@ source "amazon-ebs" "windows-packer" {
     owners      = ["amazon"]
   }
   user_data_file = "./bootstrap_win.txt"
-  winrm_password = "SuperS3cr3t!!!!"
   winrm_username = "Administrator"
 }
 
@@ -45,11 +44,6 @@ source "amazon-ebs" "windows-packer" {
 build {
   name    = "windows-packer"
   sources = ["source.amazon-ebs.windows-packer"]
-
-# provisioner "file" {
- #   source      = "./unattend.xml"
- #   destination = "C:\\Windows\\Panther\\Unattend\\unattend.xml"
- # }
 
 provisioner "ansible" {
      playbook_file   = "./ec2launch.yml"
@@ -66,8 +60,6 @@ provisioner "ansible" {
     source      = "./agent-config.yml"
     destination = "C:\\ProgramData\\Amazon\\EC2Launch\\config\\agent-config.yml"
   }
-
-
 
   provisioner "powershell" {
     inline = [
