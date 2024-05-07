@@ -25,6 +25,12 @@ variable "password" {
 }
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
+data "template_file" "index_xml_template" {
+  template = file("./unattend.xml")
+  vars = {
+    password = var.password
+  }
+}
 # source blocks are generated from your builders; a source can be referenced in
 # build blocks. A build block runs provisioner and post-processors on a
 # source.
@@ -61,7 +67,7 @@ provisioner "ansible" {
  provisioner "file" {
     source      = "./unattend.xml"
     destination = "C:\\ProgramData\\Amazon\\EC2Launch\\sysprep\\unattend.xml"
-    content     = ("./unattend_template.xml", { password = var.password })
+    content     =  data.template_file.index_xml_template.rendered
   }
 
  provisioner "file" {
