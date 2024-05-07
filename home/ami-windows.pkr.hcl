@@ -8,6 +8,10 @@ packer {
       source  = "github.com/hashicorp/ansible"
       version = "~> 1"
     }
+     upcloud = {
+      version = ">=v1.0.0"
+      source  = "github.com/UpCloudLtd/upcloud"
+    }
   }
 }
 
