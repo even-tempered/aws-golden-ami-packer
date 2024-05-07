@@ -58,10 +58,7 @@
         <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
       </OOBE>
       <UserAccounts>
-	     <AdministratorPassword>
-			<Value>{{password}}</Value> 
-			<PlainText>trur</PlainText> 
-	     </AdministratorPassword>
+	     <AdministratorPassword> {{password}} </AdministratorPassword>
       </UserAccounts>
       <BluetoothTaskbarIconEnabled>false</BluetoothTaskbarIconEnabled>
       <TimeZone>UTC</TimeZone>
