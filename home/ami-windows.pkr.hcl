@@ -59,9 +59,9 @@ provisioner "ansible" {
   }
  
  provisioner "file" {
-    source      = "./unattend.xml"
+    source      = "unattend.xml"
     destination = "C:\\ProgramData\\Amazon\\EC2Launch\\sysprep\\unattend.xml"
-    content     = "./unattend.xml", { password = var.password }
+    content     = templatefile("unattend.xml", { password = var.password })
   }
 
  provisioner "file" {
