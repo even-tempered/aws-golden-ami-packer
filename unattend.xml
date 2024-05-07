@@ -59,8 +59,8 @@
       </OOBE>
       <UserAccounts>
 	     <AdministratorPassword>
-			<Value>{{password}}</Value> 
-			<PlainText>trur</PlainText> 
+			<Value>${password}</Value> 
+			<PlainText>true</PlainText> 
 	     </AdministratorPassword>
       </UserAccounts>
       <BluetoothTaskbarIconEnabled>false</BluetoothTaskbarIconEnabled>
