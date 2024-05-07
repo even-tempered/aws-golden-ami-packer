@@ -23,7 +23,7 @@ jobs:
       - name: Run `packer validate`
         run: packer validate "./home/ami-windows.pkr.hcl"
 
-      - name: Run `packer build`
-      #  run: packer build -var "password=${{ secrets.PASSWORD }}" "./home/ami-windows.pkr.hcl"  
+      #- name: Run `packer build`
+         #run: packer build -var "password=${{ secrets.PASSWORD }}" "./home/ami-windows.pkr.hcl"  
 
  
