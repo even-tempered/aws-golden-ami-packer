@@ -52,13 +52,6 @@ build {
   name    = "windows-packer"
   sources = ["source.amazon-ebs.windows-packer"]
 
-provisioner "template" {
-  source      = "./unattend.xml"
-  destination = "./unattend.xml"
-  vars = {
-    PASSWORD = var.password
-  }
-}
 provisioner "ansible" {
      playbook_file   = "./ec2launch.yml"
      use_proxy       = false
@@ -68,6 +61,10 @@ provisioner "ansible" {
  provisioner "file" {
     source      = "unattend.xml"
     destination = "C:\\ProgramData\\Amazon\\EC2Launch\\sysprep\\unattend.xml"
+    template    = true
+    vars = {
+    PASSWORD = var.password
+   }
   }
 
  provisioner "file" {
