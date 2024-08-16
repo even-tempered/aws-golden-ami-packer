@@ -60,7 +60,7 @@
       <UserAccounts>
 	     <AdministratorPassword>
 			<Value>${password}</Value> 
-			<PlainText>true</PlainText> 
+			<PlainText>false</PlainText> 
 	     </AdministratorPassword>
       </UserAccounts>
       <BluetoothTaskbarIconEnabled>false</BluetoothTaskbarIconEnabled>
