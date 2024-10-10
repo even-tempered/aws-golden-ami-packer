@@ -72,6 +72,7 @@ provisioner "ansible" {
     inline = [
       "& 'C:/Program Files/Amazon/EC2Launch/ec2launch' reset --block",
       "& 'C:/Program Files/Amazon/EC2Launch/ec2launch' sysprep --shutdown --block"
+      "Remove-Item -Path 'C:\\ProgramData\\Amazon\\EC2Launch\\sysprep\\unattend.xml' -Force"
     ]
   }
  
